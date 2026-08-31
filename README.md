@@ -1,11 +1,11 @@
 # CS2103/T team progress tracker
 
 The official CS2103/T dashboards cover the whole cohort and are anonymous. This
-Cloudflare Worker filters them down to one single team and posts two Telegram digests a week.
+Cloudflare Worker filters them down to one single team and posts three Telegram digests a week.
 
 - **A live dashboard.** iP increments, Git/GitHub items, participation and forum
   posts for your team, side by side, auto-refreshing.
-- **Thursday 6pm SGT: status.** Who still has something outstanding, how many
+- **Tuesday and Thursday 6pm SGT: status.** Who still has something outstanding, how many
   commits each person pushed this week, participation so far, forum post counts.
 - **Friday 4pm SGT: the week ahead.** The Admin / iP / tP task lists for the week
   that starts at that moment, with every deadline.
@@ -22,10 +22,10 @@ and the summary shows what is outstanding: Chris is behind, Bo has this week's w
 and Dana has finished everything but pushed nothing inside this week's window, which is what the red
 `3` under weekly commit activity means.
 
-And the two digests as they arrive in the group chat, Thursday's status report
-above and Friday's week ahead below:
+And the three digests as they arrive in the group chat, Tuesday's and Thursday's
+status reports above and Friday's week ahead below:
 
-<img src="docs/telegram.png" alt="The two Telegram digests" width="420">
+<img src="docs/telegram.png" alt="The Telegram digests" width="420">
 
 ## Setup
 
@@ -99,7 +99,8 @@ once more if you hadn't already.
 **6. Check the schedule reads back the way you meant it.** In the Cloudflare
 dashboard, under the Worker's Settings $\to$ Cron triggers, each trigger is spelled
 out in words with its next run date. **Cloudflare counts day-of-week as
-1=Sunday…7=Saturday**, one ahead of standard cron. That is, Thursday is `5`, not `4`.
+1=Sunday…7=Saturday**, one ahead of standard cron. That is, Tuesday is `3` and
+Thursday is `5` (not `2` and `4`).
 Which digest a firing sends is read off the day it lands on, so there is nothing else to keep in step: Friday sends the week ahead, any other day sends the status digest.
 
 ## Checking it without waiting for a cron
@@ -109,7 +110,7 @@ Which digest a firing sends is read off the day it lands on, so there is nothing
 ```sh
 BASE=https://<your-worker>.workers.dev/api/digest?key=<DIGEST_KEY>
 
-curl "$BASE"                              # the Thursday status digest
+curl "$BASE"                              # a status digest
 curl "$BASE&type=week"                    # the Friday week-ahead preview
 curl "$BASE&type=week&at=2026-09-18T08:00:00Z"   # ...as it would read on that day
 curl "$BASE&send=1"                       # actually post it to the group

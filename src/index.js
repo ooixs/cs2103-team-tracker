@@ -204,7 +204,7 @@ async function collect(cfg){
 }
 
 // ---------------------------------------------------------------------------
-// Status digest (Telegram, Thursdays)
+// Status digest (Telegram, Tuesdays and Thursdays)
 //
 // The weekly badge on the iP dashboard is *commit activity*, not increments:
 // each student's detail modal reads "Week 3 [Aug 21 04:00 PM - Aug 28 03:59 PM]:

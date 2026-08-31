@@ -5,25 +5,24 @@ name = "my-team-progress-tracker"
 main = "src/index.js"
 compatibility_date = "2026-08-01"
 
+# Do not create a separate preview Worker URL for each deployment.
+preview_urls = false
+
 # Keeps per-invocation logs (including cron firings) queryable after the fact.
 [observability]
 enabled = true
-
-# One public URL is enough for a page that names people; without this, every
-# deployment also gets its own preview URL.
-preview_urls = false
 
 [assets]
 directory = "./public"
 binding = "ASSETS"
 
-# Thu 10:00 UTC = 18:00 SGT (status) · Fri 08:00 UTC = 16:00 SGT (week ahead).
-# NOTE: Cloudflare's day-of-week is 1=Sunday..7=Saturday, so Thursday is 5 and Friday 6,
-# one ahead of standard cron. Verify in the dashboard, which spells the day out.
-# Both are UTC; shift them if your team is not in SGT. A firing that lands on a
-# Friday sends the week-ahead digest, any other day sends the status digest.
+# Tue/Thu 10:00 UTC = 18:00 SGT (status) · Fri 08:00 UTC = 16:00 SGT (week ahead).
+# NOTE: Cloudflare's day-of-week is 1=Sunday..7=Saturday, so Tuesday is 3,
+# Thursday is 5 and Friday 6. Verify in the dashboard, which spells the day out.
+# All times are UTC; shift them if your team is not in SGT. A firing that lands
+# on a Friday sends the week-ahead digest, any other day sends the status digest.
 [triggers]
-crons = ["0 10 * * 5", "0 8 * * 6"]
+crons = ["0 10 * * 3", "0 10 * * 5", "0 8 * * 6"]
 
 [vars]
 # One member per line: <last 5 of student number>:<display name>:<github handle>.
